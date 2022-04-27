@@ -1,0 +1,32 @@
+$light-color: rgba($color: #000000, $alpha: 0.4);
+
+.logo-img {
+  img {
+    width:100px;
+    margin-top: 10px;
+    margin-left: 10px;
+  }
+}
+
+mat-toolbar-row {
+  a:hover, a.active {
+    background: $light-color;
+  }
+
+}
+
+.avatar {
+  cursor: pointer;
+  padding: 0 5px 0 5px;
+
+  // &:hover {
+  //   background: $light-color;
+  // }
+
+  img {
+    vertical-align: middle;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+  }
+}

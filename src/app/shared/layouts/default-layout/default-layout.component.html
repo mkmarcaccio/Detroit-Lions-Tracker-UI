@@ -1,0 +1,15 @@
+<div class="container" fxLayout="column">
+    <header>
+      <app-header (sideNavToggle)="sidenav.toggle()"></app-header>
+    </header>
+    <mat-sidenav-container autosize>
+      <mat-sidenav #sidenav mode="side" role="navigation" opened>
+        <app-sidebar (sidenavClose)="sidenav.close()"></app-sidebar>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <main>
+          <router-outlet></router-outlet>
+        </main>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
