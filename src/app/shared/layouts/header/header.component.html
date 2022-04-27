@@ -1,0 +1,16 @@
+<mat-toolbar fxLayout="column" color="primary">
+  <mat-toolbar-row fxLayout="row">
+    <div>
+      <button mat-icon-button (click)="onToggleSideNav()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <span>Detroit Lions Stat Tracker</span>
+
+    <div fxFlex="1 1 auto"></div>
+    <div fxLayout fxLayoutGap="1em" fxHide.lt-md>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-around center" fxHide.gt-sm>
+  </mat-toolbar-row>
+</mat-toolbar>
