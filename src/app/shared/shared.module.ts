@@ -65,7 +65,30 @@ import { MatStepperModule } from '@angular/material/stepper';
   ],
   exports: [
     HeaderComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatSnackBarModule,
+    MatButtonModule,
+    MatAutocompleteModule,
+    MatTreeModule,
+    MatSlideToggleModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatMenuModule,
+    MatListModule,
+    MatCardModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatExpansionModule,
+    MatRadioModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatButtonToggleModule,
+    MatStepperModule
   ],
   providers: [
   ]
