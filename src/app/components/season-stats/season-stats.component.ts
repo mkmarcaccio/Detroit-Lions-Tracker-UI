@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
-import { SeasonStats } from 'src/app/shared/models/season-stats';
+import { Subscription } from 'rxjs';
+import { SeasonGames } from 'src/app/shared/models/season-games';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
+import { SeasonStatsAddEditDialogComponent } from '../season-stats-add-edit-dialog/season-stats-add-edit-dialog.component';
 
 
 @Component({
@@ -11,26 +13,94 @@ import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.s
 })
 export class SeasonStatsComponent implements OnInit {
 
-  public seasonStats: SeasonStats[];
-  dataSource: MatTableDataSource<SeasonStats> = new MatTableDataSource();
+  public seasonGames: SeasonGames[];
+  dataSource: MatTableDataSource<SeasonGames> = new MatTableDataSource();
+  private subscriptionList: Subscription = new Subscription();
+  public dialogRef;
 
   displayedColumns: string[] = [
     'gameId',
     'opponent',
     'outcome',
-    'date'
+    'date',
+    'actions'
   ];
 
   constructor(
     private detroitLionsTrackerService: DetroitLionsTrackerService,
-    // private dialog: MatDialog,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
-    this.detroitLionsTrackerService.getSeasonStats()
+    this.detroitLionsTrackerService.getGames()
       .subscribe(response => {
-        this.seasonStats = response;
+        this.seasonGames = response;
         this.dataSource.data = response;
       });
+  }
+
+  addEditSeasonGames(input: any = new SeasonGames) {
+    if (input.gameId === undefined) {
+      input.gameId = 0;
+    }
+
+    const dialogRef = this.dialog.open(SeasonStatsAddEditDialogComponent, {
+      minWidth: "600px",
+      height: 'auto',
+      disableClose: true,
+      data: input
+    });
+
+    this.subscriptionList.add(
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (input.gameId !== 0) {
+            this.subscriptionList.add(
+              this.detroitLionsTrackerService.updateGames(input.gameId, result).subscribe(updateResult => {
+                let updateItem = this.seasonGames.find(game => game.gameId === updateResult.gameId)
+                let index = this.seasonGames.indexOf(updateItem);
+                this.seasonGames[index] = updateResult;
+                this.dataSource.data = this.seasonGames;
+              },
+              ));
+          } else {
+            this.subscriptionList.add(
+              this.detroitLionsTrackerService.createGames(result).subscribe(createResult => {
+                this.seasonGames.push(createResult);
+                this.dataSource.data = this.seasonGames;
+              },
+              ));
+          }
+        }
+      })
+    );
+  }
+
+  openDeleteDialog(templateRef, item) {
+    this.dialogRef = this.dialog.open(templateRef, {
+      minWidth: "600px",
+      height: 'auto',
+      data: item,
+      disableClose: true
+    });
+  }
+
+  deleteSeasonGames(item) {
+    this.subscriptionList.add(
+      this.detroitLionsTrackerService.deleteGames(item.gameId) .subscribe(deleteResult => {
+        this.seasonGames = this.seasonGames.filter(batchCode => batchCode.gameId !== item.gameId)
+        this.dataSource.data = this.seasonGames;
+        this.dialogRef.close();
+      },
+      ));
+  }
+
+  public filterChanged(value: string) {
+    value = value == null ? "" : value.trim().toLowerCase();
+    this.dataSource.filter = value;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionList.unsubscribe();
   }
 }

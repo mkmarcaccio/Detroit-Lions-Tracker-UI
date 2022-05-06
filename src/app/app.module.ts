@@ -5,20 +5,33 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { SeasonStatsComponent } from './components/season-stats/season-stats.component';
+import { SeasonStatsAddEditDialogComponent } from './components/season-stats-add-edit-dialog/season-stats-add-edit-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SeasonStatsComponent
+    SeasonStatsComponent,
+    SeasonStatsAddEditDialogComponent
   ],
+  entryComponents: [SeasonStatsAddEditDialogComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SharedModule
+    SharedModule,
+    MatDialogModule,
+    MatInputModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

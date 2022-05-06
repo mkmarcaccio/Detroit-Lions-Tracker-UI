@@ -28,6 +28,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatDialogModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MatStepperModule } from '@angular/material/stepper';
     RouterModule,
     CommonModule,
     FormsModule,
+    MatDialogModule,
 
     MatToolbarModule,
     MatIconModule,
