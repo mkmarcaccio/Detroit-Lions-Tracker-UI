@@ -13,12 +13,14 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
 import { SeasonStatsComponent } from './components/season-stats/season-stats.component';
 import { SeasonStatsAddEditDialogComponent } from './components/season-stats-add-edit-dialog/season-stats-add-edit-dialog.component';
+import { OffensiveGameStatsComponent } from './components/offensive-game-stats/offensive-game-stats.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SeasonStatsComponent,
-    SeasonStatsAddEditDialogComponent
+    SeasonStatsAddEditDialogComponent,
+    OffensiveGameStatsComponent
   ],
   entryComponents: [SeasonStatsAddEditDialogComponent],
   imports: [

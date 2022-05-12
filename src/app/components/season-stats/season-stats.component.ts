@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { SeasonGames } from 'src/app/shared/models/season-games';
+import { SeasonStats } from 'src/app/shared/models/season-stats';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
 import { SeasonStatsAddEditDialogComponent } from '../season-stats-add-edit-dialog/season-stats-add-edit-dialog.component';
 
@@ -13,8 +14,10 @@ import { SeasonStatsAddEditDialogComponent } from '../season-stats-add-edit-dial
 })
 export class SeasonStatsComponent implements OnInit {
 
+  public seasonStats: SeasonStats[];
+
   public seasonGames: SeasonGames[];
-  dataSource: MatTableDataSource<SeasonGames> = new MatTableDataSource();
+  dataSourceSeasonGames: MatTableDataSource<SeasonGames> = new MatTableDataSource();
   private subscriptionList: Subscription = new Subscription();
   public dialogRef;
 
@@ -35,7 +38,12 @@ export class SeasonStatsComponent implements OnInit {
     this.detroitLionsTrackerService.getGames()
       .subscribe(response => {
         this.seasonGames = response;
-        this.dataSource.data = response;
+        this.dataSourceSeasonGames.data = response;
+      });
+
+      this.detroitLionsTrackerService.getSeasons()
+      .subscribe(response => {
+        this.seasonStats = response;
       });
   }
 
@@ -60,14 +68,14 @@ export class SeasonStatsComponent implements OnInit {
                 let updateItem = this.seasonGames.find(game => game.gameId === updateResult.gameId)
                 let index = this.seasonGames.indexOf(updateItem);
                 this.seasonGames[index] = updateResult;
-                this.dataSource.data = this.seasonGames;
+                this.dataSourceSeasonGames.data = this.seasonGames;
               },
               ));
           } else {
             this.subscriptionList.add(
               this.detroitLionsTrackerService.createGames(result).subscribe(createResult => {
                 this.seasonGames.push(createResult);
-                this.dataSource.data = this.seasonGames;
+                this.dataSourceSeasonGames.data = this.seasonGames;
               },
               ));
           }
@@ -89,7 +97,7 @@ export class SeasonStatsComponent implements OnInit {
     this.subscriptionList.add(
       this.detroitLionsTrackerService.deleteGames(item.gameId) .subscribe(deleteResult => {
         this.seasonGames = this.seasonGames.filter(batchCode => batchCode.gameId !== item.gameId)
-        this.dataSource.data = this.seasonGames;
+        this.dataSourceSeasonGames.data = this.seasonGames;
         this.dialogRef.close();
       },
       ));
@@ -97,7 +105,7 @@ export class SeasonStatsComponent implements OnInit {
 
   public filterChanged(value: string) {
     value = value == null ? "" : value.trim().toLowerCase();
-    this.dataSource.filter = value;
+    this.dataSourceSeasonGames.filter = value;
   }
 
   ngOnDestroy(): void {
