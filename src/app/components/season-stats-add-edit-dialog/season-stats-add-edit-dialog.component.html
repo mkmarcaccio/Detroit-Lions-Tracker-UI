@@ -1,0 +1,29 @@
+<form #addEditSeasonStatsForm="ngForm">
+  <h1 matDialogTitle>{{isAdd? 'Add': 'Edit' }} Games</h1>
+  <mat-dialog-content>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="opponent" placeholder="Opponent" [(ngModel)]="seasonStatsReturnObject.opponent"
+        maxlength="10" required />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <mat-label>Select Outcome</mat-label>
+      <mat-select name="type" [(ngModel)]="seasonStatsReturnObject.outcome" required>
+        <mat-option *ngFor="let item of types" [value]="item">
+          {{item}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="date" placeholder="Date" [(ngModel)]="seasonStatsReturnObject.date"
+        maxlength="10" required />
+    </mat-form-field>
+
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="onNoClick()" color="warn">Cancel</button>
+    <button mat-button [disabled]="!enableSaveButton()" [matDialogClose]="seasonStatsReturnObject"
+      color="primary">Save</button>
+  </mat-dialog-actions>
+</form>

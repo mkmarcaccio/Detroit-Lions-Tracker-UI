@@ -1,6 +1,5 @@
 export class SeasonStats {
-    week: number;
-    opponent: string;
-    outcome: string;
-    date: Date;
+    seasonId: number;
+    year: number;
+    record: string;
 }
