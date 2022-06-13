@@ -2,8 +2,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { GameOutcomeType, SeasonGames } from 'src/app/shared/models/season-games';
-import { SeasonStats } from 'src/app/shared/models/season-stats';
+import { GameOutcomeType, SeasonGames } from 'src/app/models/season-games';
+import { SeasonStats } from 'src/app/models/season-stats';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
 import { SeasonStatsComponent } from '../season-stats/season-stats.component';
 

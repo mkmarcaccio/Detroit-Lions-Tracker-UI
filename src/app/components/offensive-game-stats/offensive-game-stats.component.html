@@ -1,1 +1,98 @@
-<p>offensive-game-stats works!</p>
+<div fxLayout="row" fxLayoutAlign="center none" class="space-around">
+    <div fxFlex="100">
+        <mat-card>
+            <mat-card-header fxLayout.lt-sm="column" fxLayoutAlign="space-between start">
+                <mat-card-title>Offensive Game Stats</mat-card-title>
+            </mat-card-header>
+            <mat-card-content fxLayout="column" fxLayoutGap="4px">
+                <mat-table fxFlex="none" [dataSource]="dataSourceOffensiveGameStats" matSort>
+
+                    <ng-container matColumnDef="playerId">
+                        <mat-header-cell fxFlex="15" *matHeaderCellDef mat-sort-header>
+                            Player
+                        </mat-header-cell>
+                        <mat-cell fxFlex="15" *matCellDef="let stat">
+                            {{stat.playerId}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="passingAttempts">
+                        <mat-header-cell fxFlex="15" *matHeaderCellDef mat-sort-header>
+                            PassingAttempts
+                        </mat-header-cell>
+                        <mat-cell fxFlex="15" *matCellDef="let stat">
+                            {{stat.passingAttempts}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="passingCompletions">
+                        <mat-header-cell fxFlex="15" *matHeaderCellDef mat-sort-header>
+                            PassingCompletions
+                        </mat-header-cell>
+                        <mat-cell fxFlex="15" *matCellDef="let stat">
+                            {{stat.passingCompletions}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="passingYards">
+                        <mat-header-cell fxFlex="15" *matHeaderCellDef mat-sort-header>
+                            PassingYards
+                        </mat-header-cell>
+                        <mat-cell fxFlex="15" *matCellDef="let stat">
+                            {{stat.passingYards}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <!-- <ng-container matColumnDef="actions">
+              <mat-header-cell fxFlex *matHeaderCellDef></mat-header-cell>
+              <mat-cell fxLayoutAlign="end center" fxLayoutGap="4px" *matCellDef="let item">
+                <button fxFlex="none" mat-icon-button color="accent" title="edit" (click)="addEditSeasonGames(item)"
+                  matTooltip="edit season game">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button fxFlex="none" mat-button color="primary" title="delete" (click)="openDeleteDialog(template, item)"
+                  matTooltip="delete season game">
+                  <mat-icon>delete_forever</mat-icon>
+                  <ng-template #template>
+                    <h2 matDialogTitle>Delete Season Game</h2>
+                    <ng-container>
+                      <h4> Game Id</h4>
+                      <p> {{item.gameId}} </p>
+                    </ng-container>
+                    <ng-container>
+                      <h4> Opponent </h4>
+                      <p> {{item.opponent}} </p>
+                    </ng-container>
+                    <ng-container>
+                      <h4> Outcome </h4>
+                      <p> {{item.outcome}} </p>
+                    </ng-container>
+                    <ng-container>
+                      <h4> Date </h4>
+                      <p> {{item.date}} </p>
+                    </ng-container>
+                    <mat-dialog-actions align="end">
+                      <button mat-button (click)="deleteSeasonGames(item)" color="primary"> Delete </button>
+                      <button mat-button mat-dialog-close color="warn"> Cancel </button>
+                    </mat-dialog-actions>
+                  </ng-template>
+                </button>
+              </mat-cell>
+            </ng-container> -->
+
+                    <mat-header-row fxLayout="row" fxLayoutGap="30px" *matHeaderRowDef="displayedColumns">
+                    </mat-header-row>
+                    <mat-row fxLayout="row" fxLayoutGap="30px" *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+            </mat-card-content>
+
+            <!-- <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+          <button fxFlex="none" mat-button color="primary" title="add" (click)="addEditSeasonGames()"
+            matTooltip="add game">
+            Add Game
+          </button>
+        </mat-card-actions> -->
+        </mat-card>
+    </div>
+</div>

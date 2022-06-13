@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SeasonGames } from 'src/app/shared/models/season-games';
-import { SeasonStats } from 'src/app/shared/models/season-stats';
+import { SeasonGames } from 'src/app/models/season-games';
+import { SeasonStats } from 'src/app/models/season-stats';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
 import { SeasonStatsAddEditDialogComponent } from '../season-stats-add-edit-dialog/season-stats-add-edit-dialog.component';
 
@@ -32,7 +33,7 @@ export class SeasonStatsComponent implements OnInit {
 
   constructor(
     private detroitLionsTrackerService: DetroitLionsTrackerService,
-    private dialog: MatDialog,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
