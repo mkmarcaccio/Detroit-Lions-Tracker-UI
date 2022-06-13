@@ -27,6 +27,7 @@ export class SeasonStatsComponent implements OnInit {
     'opponent',
     'outcome',
     'date',
+    'score',
     'actions'
   ];
 
