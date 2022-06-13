@@ -47,6 +47,7 @@ export class SeasonStatsAddEditDialogComponent implements OnInit {
       this.seasonStatsReturnObject.opponent = data.opponent;
       this.seasonStatsReturnObject.outcome = data.outcome;
       this.seasonStatsReturnObject.date = data.date;
+      this.seasonStatsReturnObject.score = data.score;
     }
   }
       
@@ -64,7 +65,8 @@ export class SeasonStatsAddEditDialogComponent implements OnInit {
   enableSaveButton() {
     if (this.seasonStatsReturnObject.opponent
       && this.seasonStatsReturnObject.outcome
-      && this.seasonStatsReturnObject.date) {
+      && this.seasonStatsReturnObject.date
+      && this.seasonStatsReturnObject.score) {
       return true;
     }
     return false;
