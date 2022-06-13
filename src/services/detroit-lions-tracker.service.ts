@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { SeasonGames } from 'src/app/shared/models/season-games';
-import { SeasonStats } from 'src/app/shared/models/season-stats';
+import { OffensiveGameStats } from 'src/app/models/offensive-game-stats';
+import { SeasonGames } from 'src/app/models/season-games';
+import { SeasonStats } from 'src/app/models/season-stats';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -72,6 +73,42 @@ export class DetroitLionsTrackerService {
 
     return this.http
         .delete<SeasonStats>(`${environment.BaseAddress}Season/${seasonId}`, 
+        { headers: this.headers });
+  }
+
+
+  public getOffensiveGameStats(): Observable<OffensiveGameStats[]> {
+    return this.http
+      .get<OffensiveGameStats[]>(`${environment.BaseAddress}OffensiveGameStats`, { headers: this.headers });
+  }
+
+  public getOffensiveGameStatsByGameId(gameId: number): Observable<OffensiveGameStats[]> {
+    return this.http
+      .get<OffensiveGameStats[]>(`${environment.BaseAddress}OffensiveGameStats?GameId=${gameId}`, { headers: this.headers });
+  }
+
+
+  public updateOffensiveGameStats(gameId: number, playerId: number, offensiveGameStats: OffensiveGameStats): Observable<OffensiveGameStats> {
+    return this.http
+        .put<OffensiveGameStats>(`${environment.BaseAddress}OffensiveGameStats/${gameId}/${playerId}`, 
+        JSON.stringify(offensiveGameStats), 
+        { headers: this.headers });
+  }
+
+
+  public createOffensiveGameStats(offensiveGameStats: OffensiveGameStats): Observable<OffensiveGameStats> {
+
+    return this.http
+        .post<OffensiveGameStats>(`${environment.BaseAddress}OffensiveGameStats`, 
+        JSON.stringify(offensiveGameStats), 
+        { headers: this.headers });
+  }
+
+
+  public deleteOffensiveGameStats(gameId: number, playerId: number): Observable<OffensiveGameStats> {
+
+    return this.http
+        .delete<OffensiveGameStats>(`${environment.BaseAddress}OffensiveGameStats/${gameId}/${playerId}`, 
         { headers: this.headers });
   }
 }

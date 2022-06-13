@@ -4,6 +4,7 @@ export class SeasonGames {
     opponent: string;
     outcome: string;
     date: Date;
+    score: string;
 }
 
 export enum GameOutcomeType {
