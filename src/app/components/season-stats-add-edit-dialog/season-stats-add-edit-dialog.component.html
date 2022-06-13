@@ -20,6 +20,11 @@
         maxlength="10" required />
     </mat-form-field>
 
+    <mat-form-field fxFill>
+      <input matInput type="text" name="score" placeholder="Score" [(ngModel)]="seasonStatsReturnObject.score"
+        maxlength="10" required />
+    </mat-form-field>
+
   </mat-dialog-content>
   <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
     <button mat-button (click)="onNoClick()" color="warn">Cancel</button>
