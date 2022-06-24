@@ -23,7 +23,6 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
 
   public GameId: number;
 
-  public onePlayer: Player;
   public players: Player[];
   public player: number;
 
@@ -39,15 +38,14 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
     }
 
     this.offensiveGameStatsReturnObject = new OffensiveGameStats;
-    this.onePlayer = new Player;
 
     if (this.isAdd) {
       this.offensiveGameStatsReturnObject.gameId = this.GameId;
-      this.offensiveGameStatsReturnObject.playerId = this.player;
+      this.offensiveGameStatsReturnObject.playerId = 0;
 
     } else {
       this.offensiveGameStatsReturnObject.gameId = data.gameId;
-      this.offensiveGameStatsReturnObject.playerId = this.player;
+      this.offensiveGameStatsReturnObject.playerId = data.player.playerId;
       this.offensiveGameStatsReturnObject.passingAttempts = data.passingAttempts;
       this.offensiveGameStatsReturnObject.passingCompletions = data.passingCompletions;
       this.offensiveGameStatsReturnObject.passingYards = data.passingYards;
@@ -63,7 +61,7 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
       this.offensiveGameStatsReturnObject.drops = data.drops;
     }
   }
-
+  
   ngOnInit() {
 
     this.route.queryParams
