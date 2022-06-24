@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatSelectChange, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OffensiveGameStats } from 'src/app/models/offensive-game-stats';
@@ -26,7 +26,6 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
   public players: Player[];
   public player: number;
 
-
   constructor(
     public dialogRef: MatDialogRef<OffensiveGameStatsComponent>,
     private detroitLionsTrackerService: DetroitLionsTrackerService,
@@ -41,7 +40,6 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
 
     if (this.isAdd) {
       this.offensiveGameStatsReturnObject.gameId = this.GameId;
-      this.offensiveGameStatsReturnObject.playerId = 0;
 
     } else {
       this.offensiveGameStatsReturnObject.gameId = data.gameId;
@@ -57,6 +55,7 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
       this.offensiveGameStatsReturnObject.fumbles = data.fumbles;
       this.offensiveGameStatsReturnObject.receptions = data.receptions;
       this.offensiveGameStatsReturnObject.receivingYards = data.receivingYards;
+      this.offensiveGameStatsReturnObject.receivingTouchdowns = data.receivingTouchdowns;
       this.offensiveGameStatsReturnObject.targets = data.targets;
       this.offensiveGameStatsReturnObject.drops = data.drops;
     }
@@ -95,5 +94,12 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscriptionList.unsubscribe();
+  }
+
+  onPlayerChange(event: MatSelectChange){
+    if(this.isAdd){
+    this.offensiveGameStatsReturnObject.playerId = event.value;
+    }
+
   }
 }

@@ -62,7 +62,10 @@ export class OffensiveGameStatsComponent implements OnInit {
   }
 
   addEditOffensiveGameStats(input: any = new OffensiveGameStats) {
-    
+    if (input.playerId == undefined) {
+      input.playerId = 0;
+    }
+
     const dialogRef = this.dialog.open(OffensiveGameStatsAddEditDialogComponent, {
       minWidth: "auto",
       height: 'auto',
@@ -75,11 +78,12 @@ export class OffensiveGameStatsComponent implements OnInit {
         console.log("Initial result:",this.offensiveGameStats);
         console.log("Id:", input.playerId);
         if (result) {
-          if (result.playerId !== 0) {
+          if (result.playerId == input.playerId) {
             console.log("update");
             console.log("result", result);
             this.subscriptionList.add(
-              this.detroitLionsTrackerService.updateOffensiveGameStats(result.gameId, input.playerId, result).subscribe(updateResult => {
+              this.detroitLionsTrackerService.updateOffensiveGameStats(result.gameId, result.playerId, result).subscribe(updateResult => {
+                console.log(updateResult);
                 let updateItem = this.offensiveGameStats.find(game => game.gameId === updateResult.gameId && game.playerId === updateResult.playerId)
                 let index = this.offensiveGameStats.indexOf(updateItem);
                 this.offensiveGameStats[index] = updateResult;

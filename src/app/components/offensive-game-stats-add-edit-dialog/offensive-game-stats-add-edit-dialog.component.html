@@ -2,15 +2,19 @@
   <h1 matDialogTitle>{{isAdd? 'Add': 'Edit' }} Offensive Game Stats</h1>
   <mat-dialog-content>
 
-    <mat-form-field fxFill>
-        <mat-label>Select Player</mat-label>
-        <mat-select name="players" [(ngModel)]="player" required>
-          <mat-option *ngFor="let player of players" [value]="player.playerId">
-            {{player.firstName}} {{player.lastName}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div *ngIf="!isAdd">
+      <h4 *ngFor="let player of players"> {{player.lastName}}</h4>
+    </div>
+    
+    <mat-form-field fxFill *ngIf="isAdd">
+      <mat-label>Select Player</mat-label>
+      <mat-select name="players" [(ngModel)]="player" required (selectionChange)="onPlayerChange($event)">
+        <mat-option *ngFor="let player of players" [value]="player.playerId">
+          {{player.firstName}} {{player.lastName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-    <h4> Passing Stats</h4>
+    <h4>Passing Stats</h4>
     <mat-form-field fxFill>
       <input matInput type="text" name="passingAttempts" placeholder="PassingAttempts"
         [(ngModel)]="offensiveGameStatsReturnObject.passingAttempts" maxlength="10" />
@@ -36,7 +40,7 @@
         [(ngModel)]="offensiveGameStatsReturnObject.interceptions" maxlength="10" />
     </mat-form-field>
 
-    <h4> Rushing Stats</h4>
+    <h4>Rushing Stats</h4>
     <mat-form-field fxFill>
       <input matInput type="text" name="rushingAttempts" placeholder="RushingAttempts"
         [(ngModel)]="offensiveGameStatsReturnObject.rushingAttempts" maxlength="10" />
@@ -57,7 +61,7 @@
         [(ngModel)]="offensiveGameStatsReturnObject.fumbles" maxlength="10" />
     </mat-form-field>
 
-    <h4> Receiving Stats</h4>
+    <h4>Receiving Stats</h4>
     <mat-form-field fxFill>
       <input matInput type="text" name="receptions" placeholder="Receptions"
         [(ngModel)]="offensiveGameStatsReturnObject.receptions" maxlength="10" />
@@ -79,8 +83,8 @@
     </mat-form-field>
 
     <mat-form-field fxFill>
-      <input matInput type="text" name="drops" placeholder="Drops"
-        [(ngModel)]="offensiveGameStatsReturnObject.drops" maxlength="10" />
+      <input matInput type="text" name="drops" placeholder="Drops" [(ngModel)]="offensiveGameStatsReturnObject.drops"
+        maxlength="10" />
     </mat-form-field>
 
   </mat-dialog-content>
@@ -91,6 +95,6 @@
   </mat-dialog-actions>
 </form>
 
-<!-- <pre>{{this.players | json}}</pre> -->
-<pre>{{this.player | json}}</pre>
+<pre>{{this.players | json}}</pre>
+<!-- <pre>{{this.playerId}}</pre> -->
 <pre>{{this.offensiveGameStatsReturnObject | json}}</pre>
