@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { OffensiveGameStats } from 'src/app/models/offensive-game-stats';
+import { Player } from 'src/app/models/player';
 import { SeasonGames } from 'src/app/models/season-games';
 import { SeasonStats } from 'src/app/models/season-stats';
 import { environment } from 'src/environments/environment';
@@ -110,5 +111,10 @@ export class DetroitLionsTrackerService {
     return this.http
         .delete<OffensiveGameStats>(`${environment.BaseAddress}OffensiveGameStats/${gameId}/${playerId}`, 
         { headers: this.headers });
+  }
+
+  public getPlayers(): Observable<Player[]> {
+    return this.http
+      .get<Player[]>(`${environment.BaseAddress}Players`, { headers: this.headers });
   }
 }

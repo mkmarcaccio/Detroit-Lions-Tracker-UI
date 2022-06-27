@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OffensiveGameStats } from 'src/app/models/offensive-game-stats';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
+import { OffensiveGameStatsAddEditDialogComponent } from '../offensive-game-stats-add-edit-dialog/offensive-game-stats-add-edit-dialog.component';
 
 @Component({
   selector: 'app-offensive-game-stats',
@@ -12,29 +13,29 @@ import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.s
 })
 export class OffensiveGameStatsComponent implements OnInit {
 
-  public offensiveGameStats: OffensiveGameStats[];
-
   dataSourceOffensiveGameStats: MatTableDataSource<OffensiveGameStats> = new MatTableDataSource();
   private subscriptionList: Subscription = new Subscription();
   public dialogRef;
-
+  public offensiveGameStats: OffensiveGameStats[];
   public GameId: number;
 
   displayedColumns: string[] = [
-    'playerId',
+    'player',
     'passingAttempts',
     'passingCompletions',
     'passingYards',
-    // 'passingTouchdowns',
-    // 'interceptions',
-    // 'rushingAttempts',
-    // 'rushingYards',
-    // 'rushingTouchdowns',
-    // 'fumbles',
-    // 'receptions',
-    // 'receivingYards',
-    // 'targets',
-    // 'drops'
+    'passingTouchdowns',
+    'interceptions',
+    'rushingAttempts',
+    'rushingYards',
+    'rushingTouchdowns',
+    'fumbles',
+    'receptions',
+    'receivingYards',
+    'receivingTouchdowns',
+    'targets',
+    'drops',
+    'actions'
   ];
 
   constructor(
@@ -44,17 +45,83 @@ export class OffensiveGameStatsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
     this.route.queryParams
       .subscribe(params => {
         this.GameId = params.GameId;
       })
-    
+
     this.detroitLionsTrackerService.getOffensiveGameStatsByGameId(this.GameId)
       .subscribe(response => {
         this.offensiveGameStats = response;
         this.dataSourceOffensiveGameStats.data = response;
       });
+  }
+
+  addEditOffensiveGameStats(input: any = new OffensiveGameStats) {
+    if (input.playerId == undefined) {
+      input.playerId = 0;
+    }
+
+    const dialogRef = this.dialog.open(OffensiveGameStatsAddEditDialogComponent, {
+      minWidth: "auto",
+      height: 'auto',
+      disableClose: true,
+      data: input
+    });
+
+    this.subscriptionList.add(
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("Initial result:", this.offensiveGameStats);
+        console.log("Id:", input.playerId);
+        if (result) {
+          if (result.playerId == input.playerId) {
+            console.log("update");
+            console.log("result", result);
+            this.subscriptionList.add(
+              this.detroitLionsTrackerService.updateOffensiveGameStats(result.gameId, result.playerId, result).subscribe(updateResult => {
+                console.log("After PUT:", updateResult);
+                let updateItem = this.offensiveGameStats.find(game => game.gameId === updateResult.gameId && game.playerId === updateResult.playerId)
+                let index = this.offensiveGameStats.indexOf(updateItem);
+                this.offensiveGameStats[index] = updateResult;
+                this.dataSourceOffensiveGameStats.data = this.offensiveGameStats;
+                this.getRefreshedGameStats();
+              },
+              ));
+
+          } else {
+            console.log("add");
+            this.subscriptionList.add(
+              this.detroitLionsTrackerService.createOffensiveGameStats(result).subscribe(createResult => {
+                this.offensiveGameStats.push(createResult);
+                this.dataSourceOffensiveGameStats.data = this.offensiveGameStats;
+                this.getRefreshedGameStats();
+              },
+              ));
+          }
+        }
+      })
+    );
+  }
+
+  openDeleteDialog(templateRef, item) {
+    this.dialogRef = this.dialog.open(templateRef, {
+      minWidth: "auto",
+      height: 'auto',
+      data: item,
+      disableClose: true
+    });
+  }
+
+  deleteOffensiveGameStats(item) {
+    this.subscriptionList.add(
+      this.detroitLionsTrackerService.deleteOffensiveGameStats(item.gameId, item.playerId).subscribe(deleteResult => {
+        this.offensiveGameStats = this.offensiveGameStats.filter(stats => stats.gameId !== item.gameId && stats.playerId !== item.playerId)
+        this.dataSourceOffensiveGameStats.data = this.offensiveGameStats;
+        this.dialogRef.close();
+        this.getRefreshedGameStats();
+      },
+      ));
   }
 
   public filterChanged(value: string) {
@@ -64,5 +131,13 @@ export class OffensiveGameStatsComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscriptionList.unsubscribe();
+  }
+
+  getRefreshedGameStats() {
+    this.detroitLionsTrackerService.getOffensiveGameStatsByGameId(this.GameId)
+      .subscribe(response => {
+        this.offensiveGameStats = response;
+        this.dataSourceOffensiveGameStats.data = response;
+      });
   }
 }

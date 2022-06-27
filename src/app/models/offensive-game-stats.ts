@@ -12,6 +12,7 @@ export class OffensiveGameStats {
     fumbles: number;
     receptions: number;
     receivingYards: number;
+    receivingTouchdowns: number;
     targets: number;
     drops: number;
 }

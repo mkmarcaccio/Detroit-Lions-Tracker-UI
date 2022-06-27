@@ -1,9 +1,9 @@
-<div fxLayout="row" fxLayoutAlign="center none" class="space-around">
+<div fxLayout="row" fxLayoutAlign="center none">
   <div fxFlex="100">
     <mat-card>
       <mat-card-header *ngFor="let stats of seasonStats" fxLayout.lt-sm="column" fxLayoutAlign="space-between start">
         <mat-card-title>{{stats.year}} Season Stats</mat-card-title>
-        <mat-card-subtitle>({{stats.record}})</mat-card-subtitle>
+        <!-- <mat-card-subtitle>({{stats.record}})</mat-card-subtitle> -->
       </mat-card-header>
       <mat-card-content fxLayout="column" fxLayoutGap="4px">
         <mat-table fxFlex="none" [dataSource]="dataSourceSeasonGames" matSort>

@@ -1,0 +1,96 @@
+<form #addEditOffensiveGameStatsForm="ngForm">
+  <h1 matDialogTitle>{{isAdd? 'Add': 'Edit' }} Offensive Game Stats</h1>
+  <mat-dialog-content>
+
+    <div *ngIf="!isAdd && this.onePlayer">
+      <h3> Player: {{this.onePlayer.firstName}} {{ this.onePlayer.lastName }} </h3>
+    </div>
+
+    <mat-form-field fxFill *ngIf="isAdd">
+      <mat-label>Select Player</mat-label>
+      <mat-select name="players" [(ngModel)]="player" required (selectionChange)="onPlayerChange($event)">
+        <mat-option *ngFor="let player of players" [value]="player.playerId">
+          {{player.firstName}} {{player.lastName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h4>Passing Stats</h4>
+    <mat-form-field fxFill>
+      <input matInput type="text" name="passingAttempts" placeholder="PassingAttempts"
+        [(ngModel)]="offensiveGameStatsReturnObject.passingAttempts" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="passingCompletions" placeholder="PassingCompletions"
+        [(ngModel)]="offensiveGameStatsReturnObject.passingCompletions" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="passingYards" placeholder="PassingYards"
+        [(ngModel)]="offensiveGameStatsReturnObject.passingYards" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="passingTouchdowns" placeholder="PassingTouchdowns"
+        [(ngModel)]="offensiveGameStatsReturnObject.passingTouchdowns" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="interceptions" placeholder="Interceptions"
+        [(ngModel)]="offensiveGameStatsReturnObject.interceptions" maxlength="10" />
+    </mat-form-field>
+
+    <h4>Rushing Stats</h4>
+    <mat-form-field fxFill>
+      <input matInput type="text" name="rushingAttempts" placeholder="RushingAttempts"
+        [(ngModel)]="offensiveGameStatsReturnObject.rushingAttempts" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="rushingYards" placeholder="RushingYards"
+        [(ngModel)]="offensiveGameStatsReturnObject.rushingYards" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="rushingTouchdowns" placeholder="RushingTouchdowns"
+        [(ngModel)]="offensiveGameStatsReturnObject.rushingTouchdowns" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="fumbles" placeholder="Fumbles"
+        [(ngModel)]="offensiveGameStatsReturnObject.fumbles" maxlength="10" />
+    </mat-form-field>
+
+    <h4>Receiving Stats</h4>
+    <mat-form-field fxFill>
+      <input matInput type="text" name="receptions" placeholder="Receptions"
+        [(ngModel)]="offensiveGameStatsReturnObject.receptions" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="receivingYards" placeholder="ReceivingYards"
+        [(ngModel)]="offensiveGameStatsReturnObject.receivingYards" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="receivingTouchdowns" placeholder="ReceivingTouchdowns"
+        [(ngModel)]="offensiveGameStatsReturnObject.receivingTouchdowns" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="targets" placeholder="Targets"
+        [(ngModel)]="offensiveGameStatsReturnObject.targets" maxlength="10" />
+    </mat-form-field>
+
+    <mat-form-field fxFill>
+      <input matInput type="text" name="drops" placeholder="Drops" [(ngModel)]="offensiveGameStatsReturnObject.drops"
+        maxlength="10" />
+    </mat-form-field>
+
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="onNoClick()" color="warn">Cancel</button>
+    <button mat-button [disabled]="!enableSaveButton()" [matDialogClose]="offensiveGameStatsReturnObject"
+      color="primary">Save</button>
+  </mat-dialog-actions>
+</form>
