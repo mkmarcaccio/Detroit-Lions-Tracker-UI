@@ -13,17 +13,17 @@ import { OffensiveGameStatsComponent } from '../offensive-game-stats/offensive-g
   styleUrls: ['./offensive-game-stats-add-edit-dialog.component.scss']
 })
 export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
-  isAdd: boolean;
+
+  public dataSourceOffensiveGameStats: MatTableDataSource<OffensiveGameStats> = new MatTableDataSource();
+  private subscriptionList: Subscription = new Subscription();
+  public isAdd: boolean;
 
   public offensiveGameStatsReturnObject: OffensiveGameStats;
-
-  offensiveGameStats: OffensiveGameStats[];
-  dataSourceOffensiveGameStats: MatTableDataSource<OffensiveGameStats> = new MatTableDataSource();
-  private subscriptionList: Subscription = new Subscription();
-
+  public offensiveGameStats: OffensiveGameStats[];
   public GameId: number;
 
-  public players: Player[];
+  public players: Player[] = [];
+  public onePlayer: Player;
   public player: number;
 
   constructor(
@@ -60,7 +60,7 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
       this.offensiveGameStatsReturnObject.drops = data.drops;
     }
   }
-  
+
   ngOnInit() {
 
     this.route.queryParams
@@ -78,14 +78,12 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
     this.detroitLionsTrackerService.getPlayers()
       .subscribe(response => {
         this.players = response
+        this.onePlayer = this.players.find(player => player.playerId === this.offensiveGameStatsReturnObject.playerId);
       });
   }
 
   enableSaveButton() {
-    if (this.player) {
-      return true;
-    }
-    return false;
+    return true;
   }
 
   onNoClick(): void {
@@ -96,10 +94,16 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
     this.subscriptionList.unsubscribe();
   }
 
-  onPlayerChange(event: MatSelectChange){
-    if(this.isAdd){
-    this.offensiveGameStatsReturnObject.playerId = event.value;
+  onPlayerChange(event: MatSelectChange) {
+    if (this.isAdd) {
+      this.offensiveGameStatsReturnObject.playerId = event.value;
     }
+  }
 
+  displayPlayerName() {
+    if (this.players && this.offensiveGameStatsReturnObject) {
+      let onePlayer = this.players.find(player => player.playerId === this.offensiveGameStatsReturnObject.playerId);
+      return [onePlayer.firstName, onePlayer.lastName];
+    }
   }
 }

@@ -3,7 +3,6 @@ import { MatDialog, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OffensiveGameStats } from 'src/app/models/offensive-game-stats';
-import { Player } from 'src/app/models/player';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
 import { OffensiveGameStatsAddEditDialogComponent } from '../offensive-game-stats-add-edit-dialog/offensive-game-stats-add-edit-dialog.component';
 
@@ -14,12 +13,10 @@ import { OffensiveGameStatsAddEditDialogComponent } from '../offensive-game-stat
 })
 export class OffensiveGameStatsComponent implements OnInit {
 
-  public offensiveGameStats: OffensiveGameStats[];
-
   dataSourceOffensiveGameStats: MatTableDataSource<OffensiveGameStats> = new MatTableDataSource();
   private subscriptionList: Subscription = new Subscription();
   public dialogRef;
-
+  public offensiveGameStats: OffensiveGameStats[];
   public GameId: number;
 
   displayedColumns: string[] = [
@@ -48,12 +45,12 @@ export class OffensiveGameStatsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+
     this.route.queryParams
       .subscribe(params => {
         this.GameId = params.GameId;
       })
-    
+
     this.detroitLionsTrackerService.getOffensiveGameStatsByGameId(this.GameId)
       .subscribe(response => {
         this.offensiveGameStats = response;
@@ -72,10 +69,10 @@ export class OffensiveGameStatsComponent implements OnInit {
       disableClose: true,
       data: input
     });
-    
+
     this.subscriptionList.add(
       dialogRef.afterClosed().subscribe(result => {
-        console.log("Initial result:",this.offensiveGameStats);
+        console.log("Initial result:", this.offensiveGameStats);
         console.log("Id:", input.playerId);
         if (result) {
           if (result.playerId == input.playerId) {
@@ -83,20 +80,22 @@ export class OffensiveGameStatsComponent implements OnInit {
             console.log("result", result);
             this.subscriptionList.add(
               this.detroitLionsTrackerService.updateOffensiveGameStats(result.gameId, result.playerId, result).subscribe(updateResult => {
-                console.log(updateResult);
+                console.log("After PUT:", updateResult);
                 let updateItem = this.offensiveGameStats.find(game => game.gameId === updateResult.gameId && game.playerId === updateResult.playerId)
                 let index = this.offensiveGameStats.indexOf(updateItem);
                 this.offensiveGameStats[index] = updateResult;
                 this.dataSourceOffensiveGameStats.data = this.offensiveGameStats;
+                this.getRefreshedGameStats();
               },
               ));
-              
+
           } else {
             console.log("add");
             this.subscriptionList.add(
               this.detroitLionsTrackerService.createOffensiveGameStats(result).subscribe(createResult => {
                 this.offensiveGameStats.push(createResult);
                 this.dataSourceOffensiveGameStats.data = this.offensiveGameStats;
+                this.getRefreshedGameStats();
               },
               ));
           }
@@ -116,10 +115,11 @@ export class OffensiveGameStatsComponent implements OnInit {
 
   deleteOffensiveGameStats(item) {
     this.subscriptionList.add(
-      this.detroitLionsTrackerService.deleteOffensiveGameStats(item.gameId, item.playerId) .subscribe(deleteResult => {
+      this.detroitLionsTrackerService.deleteOffensiveGameStats(item.gameId, item.playerId).subscribe(deleteResult => {
         this.offensiveGameStats = this.offensiveGameStats.filter(stats => stats.gameId !== item.gameId && stats.playerId !== item.playerId)
         this.dataSourceOffensiveGameStats.data = this.offensiveGameStats;
         this.dialogRef.close();
+        this.getRefreshedGameStats();
       },
       ));
   }
@@ -131,5 +131,13 @@ export class OffensiveGameStatsComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.subscriptionList.unsubscribe();
+  }
+
+  getRefreshedGameStats() {
+    this.detroitLionsTrackerService.getOffensiveGameStatsByGameId(this.GameId)
+      .subscribe(response => {
+        this.offensiveGameStats = response;
+        this.dataSourceOffensiveGameStats.data = response;
+      });
   }
 }
