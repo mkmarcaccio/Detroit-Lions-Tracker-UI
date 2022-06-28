@@ -1,0 +1,81 @@
+<form #addEditSpecialTeamsGameStatsForm="ngForm">
+    <h1 matDialogTitle>{{isAdd? 'Add': 'Edit' }} Special Teams Game Stats</h1>
+    <mat-dialog-content>
+
+        <div *ngIf="!isAdd && this.onePlayer">
+            <h3> Player: {{this.onePlayer.firstName}} {{ this.onePlayer.lastName }} </h3>
+        </div>
+
+        <mat-form-field fxFill *ngIf="isAdd">
+            <mat-label>Select Player</mat-label>
+            <mat-select name="players" [(ngModel)]="player" required (selectionChange)="onPlayerChange($event)">
+                <mat-option *ngFor="let player of players" [value]="player.playerId">
+                    {{player.firstName}} {{player.lastName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h4>Kicking Stats</h4>
+        <mat-form-field fxFill>
+            <input matInput type="text" name="fgAttempts" placeholder="FGAttempts"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.fgAttempts" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="fgMade" placeholder="FGMade"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.fgMade" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="xpAttempts" placeholder="XPAttempts"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.xpAttempts" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="xpMade" placeholder="XPMade"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.xpMade" maxlength="10" />
+        </mat-form-field>
+
+        <h4>Punting Stats</h4>
+        <mat-form-field fxFill>
+            <input matInput type="text" name="punts" placeholder="Punts"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.punts" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="puntYards" placeholder="PuntYards"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.puntYards" maxlength="10" />
+        </mat-form-field>
+
+        <h4>Return Stats</h4>
+        <mat-form-field fxFill>
+            <input matInput type="text" name="kickReturns" placeholder="KickReturns"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.kickReturns" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="kickReturnYards" placeholder="KickReturnYards"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.kickReturnYards" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="puntReturns" placeholder="PuntReturns"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.puntReturns" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="puntReturnYards" placeholder="PuntReturnYards"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.puntReturnYards" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="touchdowns" placeholder="Touchdowns"
+                [(ngModel)]="specialTeamsGameStatsReturnObject.touchdowns" maxlength="10" />
+        </mat-form-field>
+
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button (click)="onNoClick()" color="warn">Cancel</button>
+        <button mat-button [disabled]="!enableSaveButton()" [matDialogClose]="specialTeamsGameStatsReturnObject"
+            color="primary">Save</button>
+    </mat-dialog-actions>
+</form>

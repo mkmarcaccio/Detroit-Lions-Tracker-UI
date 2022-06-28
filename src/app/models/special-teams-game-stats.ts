@@ -1,10 +1,10 @@
 export class SpecialTeamsGameStats {
     gameId: number;
     playerId: number;
-    fGAttempts: number;
-    fGMade: number;
-    xPAttempts: number;
-    xPMade: number;
+    fgAttempts: number;
+    fgMade: number;
+    xpAttempts: number;
+    xpMade: number;
     punts: number;
     puntYards: number;
     kickReturns: number;
