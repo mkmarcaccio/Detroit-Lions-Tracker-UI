@@ -1,0 +1,74 @@
+<form #addEditDefensiveGameStatsForm="ngForm">
+    <h1 matDialogTitle>{{isAdd? 'Add': 'Edit' }} Defensive Game Stats</h1>
+    <mat-dialog-content>
+
+        <div *ngIf="!isAdd && this.onePlayer">
+            <h3> Player: {{this.onePlayer.firstName}} {{ this.onePlayer.lastName }} </h3>
+        </div>
+
+        <mat-form-field fxFill *ngIf="isAdd">
+            <mat-label>Select Player</mat-label>
+            <mat-select name="players" [(ngModel)]="player" required (selectionChange)="onPlayerChange($event)">
+                <mat-option *ngFor="let player of players" [value]="player.playerId">
+                    {{player.firstName}} {{player.lastName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h4>Stats</h4>
+        <mat-form-field fxFill>
+            <input matInput type="text" name="tackles" placeholder="Tackles"
+                [(ngModel)]="defensiveGameStatsReturnObject.tackles" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="tacklesForLoss" placeholder="TacklesForLoss"
+                [(ngModel)]="defensiveGameStatsReturnObject.tacklesForLoss" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="sacks" placeholder="Sacks"
+                [(ngModel)]="defensiveGameStatsReturnObject.sacks" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="forcedFumbles" placeholder="ForcedFumbles"
+                [(ngModel)]="defensiveGameStatsReturnObject.forcedFumbles" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="fumblesRecovered" placeholder="FumblesRecovered"
+                [(ngModel)]="defensiveGameStatsReturnObject.fumblesRecovered" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="interceptions" placeholder="interceptions"
+                [(ngModel)]="defensiveGameStatsReturnObject.interceptions" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="intYards" placeholder="IntYards"
+                [(ngModel)]="defensiveGameStatsReturnObject.intYards" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="passesDeflected" placeholder="PassesDeflected"
+                [(ngModel)]="defensiveGameStatsReturnObject.passesDeflected" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="touchdowns" placeholder="Touchdowns"
+                [(ngModel)]="defensiveGameStatsReturnObject.touchdowns" maxlength="10" />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="safeties" placeholder="Safeties"
+                [(ngModel)]="defensiveGameStatsReturnObject.safeties" maxlength="10" />
+        </mat-form-field>
+
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button (click)="onNoClick()" color="warn">Cancel</button>
+        <button mat-button [disabled]="!enableSaveButton()" [matDialogClose]="defensiveGameStatsReturnObject"
+            color="primary">Save</button>
+    </mat-dialog-actions>
+</form>

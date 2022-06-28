@@ -1,1 +1,153 @@
-<p>defensive-game-stats works!</p>
+<div fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="100">
+      <mat-card>
+        <mat-card-header fxLayout.lt-sm="column" fxLayoutAlign="space-between start">
+          <mat-card-title>Defensive Game Stats</mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="row" fxLayoutGap="4px">
+          <mat-table [dataSource]="dataSourceDefensiveGameStats" matSort>
+  
+            <ng-container matColumnDef="player">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Player
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.player?.firstName}} {{stat.player?.lastName}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="tackles">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Tackles
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.tackles}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="tacklesForLoss">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                TacklesForLoss
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.tacklesForLoss}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="sacks">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Sacks
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.sacks}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="forcedFumbles">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                ForcedFumbles
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.forcedFumbles}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="fumblesRecovered">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                FumblesRecovered
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.fumblesRecovered}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="interceptions">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Interceptions
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.interceptions}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="intYards">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                IntYards
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.intYards}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="passesDeflected">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                PassesDeflected
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.passesDeflected}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="touchdowns">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Touchdowns
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.touchdowns}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="safeties">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                Safeties
+              </mat-header-cell>
+              <mat-cell *matCellDef="let stat">
+                {{stat.safeties}}
+              </mat-cell>
+            </ng-container>
+  
+            <ng-container matColumnDef="actions">
+              <mat-header-cell fxFlex *matHeaderCellDef></mat-header-cell>
+              <mat-cell fxLayoutAlign="end center" fxLayoutGap="4px" *matCellDef="let item">
+                <button fxFlex="none" mat-icon-button color="accent" title="edit"
+                  (click)="addEditDefensiveGameStats(item)" matTooltip="edit defensive game stats">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button fxFlex="none" mat-button color="primary" title="delete" (click)="openDeleteDialog(template, item)"
+                  matTooltip="delete defensive game stats">
+                  <mat-icon>delete_forever</mat-icon>
+                  <ng-template #template>
+                    <h2 matDialogTitle>Delete Defensive Game Stats</h2>
+                    <ng-container>
+                      <h4> Game Id</h4>
+                      <p> {{item.gameId}} </p>
+                    </ng-container>
+                    <ng-container>
+                      <h4> Player Id </h4>
+                      <p> {{item.playerId}} </p>
+                    </ng-container>
+                    <mat-dialog-actions align="end">
+                      <button mat-button (click)="deleteDefensiveGameStats(item)" color="primary"> Delete </button>
+                      <button mat-button mat-dialog-close color="warn"> Cancel </button>
+                    </mat-dialog-actions>
+                  </ng-template>
+                </button>
+              </mat-cell>
+            </ng-container>
+  
+            <mat-header-row fxLayout="row" fxLayoutGap="30px" *matHeaderRowDef="displayedColumns">
+            </mat-header-row>
+            <mat-row fxLayout="row" fxLayoutGap="30px" *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+        </mat-card-content>
+  
+        <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+          <button fxFlex="none" mat-button color="primary" title="add" (click)="addEditDefensiveGameStats()"
+            matTooltip="add defensive game stats">
+            Add Defensive Game Stats
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>

@@ -83,7 +83,13 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
   }
 
   enableSaveButton() {
-    return true;
+    if (this.isAdd && this.player) {
+      return true;
+    }
+    if (!this.isAdd) {
+      return true;
+    }
+    return false;
   }
 
   onNoClick(): void {

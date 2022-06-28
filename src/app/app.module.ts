@@ -17,6 +17,7 @@ import { OffensiveGameStatsComponent } from './components/offensive-game-stats/o
 import { DefensiveGameStatsComponent } from './components/defensive-game-stats/defensive-game-stats.component';
 import { SpecialTeamsGameStatsComponent } from './components/special-teams-game-stats/special-teams-game-stats.component';
 import { OffensiveGameStatsAddEditDialogComponent } from './components/offensive-game-stats-add-edit-dialog/offensive-game-stats-add-edit-dialog.component';
+import { DefensiveGameStatsAddEditDialogComponent } from './components/defensive-game-stats-add-edit-dialog/defensive-game-stats-add-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,11 +27,13 @@ import { OffensiveGameStatsAddEditDialogComponent } from './components/offensive
     OffensiveGameStatsComponent,
     DefensiveGameStatsComponent,
     SpecialTeamsGameStatsComponent,
-    OffensiveGameStatsAddEditDialogComponent
+    OffensiveGameStatsAddEditDialogComponent,
+    DefensiveGameStatsAddEditDialogComponent
   ],
   entryComponents: [
     SeasonStatsAddEditDialogComponent,
-    OffensiveGameStatsAddEditDialogComponent
+    OffensiveGameStatsAddEditDialogComponent,
+    DefensiveGameStatsAddEditDialogComponent
   ],
   imports: [
     BrowserModule,
