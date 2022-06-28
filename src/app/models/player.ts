@@ -3,14 +3,29 @@ export class Player {
     firstName: string;
     lastName: string;
     position: string;
-    unit: PlayerUnit;
+    unit: string;
     jerseyNumber: number;
     depthChartOrder: number;
-    IsOnRoster: boolean;
+    isOnRoster: boolean;
 }
 
 export enum PlayerUnit {
     Offense = "Offense",
     Defense = "Defense",
     SpecialTeams = "SpecialTeams"
+}
+
+export enum PlayerPositions {
+    QB = "QB",
+    RB = "RB",
+    FB = "FB",
+    TE = "TE",
+    WR = "WR",
+    DT = "DT",
+    DE = "DE",
+    LB = "LB",
+    CB = "CB",
+    S = "S",
+    K = "K",
+    P = "P"
 }

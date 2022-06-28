@@ -1,0 +1,55 @@
+<form #addEditPlayerForm="ngForm">
+    <h1 matDialogTitle>{{isAdd? 'Add': 'Edit' }} Player</h1>
+    <mat-dialog-content>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="jerseyNumber" placeholder="JerseyNumber"
+                [(ngModel)]="playersReturnObject.jerseyNumber" maxlength="10" required />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="firstName" placeholder="FirstName"
+                [(ngModel)]="playersReturnObject.firstName" maxlength="10" required />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="lastName" placeholder="LastName"
+                [(ngModel)]="playersReturnObject.lastName" maxlength="10" required />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <mat-label>Position</mat-label>
+            <mat-select name="position" [(ngModel)]="playersReturnObject.position" required>
+                <mat-option *ngFor="let position of positions" [value]="position">
+                    {{position}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <mat-label>Select Unit</mat-label>
+            <mat-select name="unit" [(ngModel)]="playersReturnObject.unit" required>
+                <mat-option *ngFor="let unit of units" [value]="unit">
+                    {{unit}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <input matInput type="text" name="depthChartOrder" placeholder="DepthChartOrder"
+                [(ngModel)]="playersReturnObject.depthChartOrder" maxlength="10" required />
+        </mat-form-field>
+
+        <mat-form-field fxFill>
+            <mat-label>IsOnRoster</mat-label>
+            <mat-select name="isOnRoster" [(ngModel)]="playersReturnObject.isOnRoster" required>
+                <mat-option [value]="true">true</mat-option>
+                <mat-option [value]="false">false</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button (click)="onNoClick()" color="warn">Cancel</button>
+        <button mat-button [disabled]="!enableSaveButton()" [matDialogClose]="playersReturnObject"
+            color="primary">Save</button>
+    </mat-dialog-actions>
+</form>

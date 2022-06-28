@@ -19,6 +19,8 @@ import { SpecialTeamsGameStatsComponent } from './components/special-teams-game-
 import { OffensiveGameStatsAddEditDialogComponent } from './components/offensive-game-stats-add-edit-dialog/offensive-game-stats-add-edit-dialog.component';
 import { DefensiveGameStatsAddEditDialogComponent } from './components/defensive-game-stats-add-edit-dialog/defensive-game-stats-add-edit-dialog.component';
 import { SpecialTeamsGameStatsAddEditDialogComponent } from './components/special-teams-game-stats-add-edit-dialog/special-teams-game-stats-add-edit-dialog.component';
+import { PlayersComponent } from './components/players/players.component';
+import { PlayersAddEditDialogComponent } from './components/players-add-edit-dialog/players-add-edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +32,17 @@ import { SpecialTeamsGameStatsAddEditDialogComponent } from './components/specia
     SpecialTeamsGameStatsComponent,
     OffensiveGameStatsAddEditDialogComponent,
     DefensiveGameStatsAddEditDialogComponent,
-    SpecialTeamsGameStatsAddEditDialogComponent
+    SpecialTeamsGameStatsAddEditDialogComponent,
+    PlayersComponent,
+    PlayersAddEditDialogComponent
   ],
   entryComponents: [
     SeasonStatsAddEditDialogComponent,
     OffensiveGameStatsAddEditDialogComponent,
     DefensiveGameStatsAddEditDialogComponent,
-    SpecialTeamsGameStatsAddEditDialogComponent
+    SpecialTeamsGameStatsAddEditDialogComponent,
+    PlayersComponent,
+    PlayersAddEditDialogComponent
   ],
   imports: [
     BrowserModule,
