@@ -72,15 +72,10 @@ export class OffensiveGameStatsComponent implements OnInit {
 
     this.subscriptionList.add(
       dialogRef.afterClosed().subscribe(result => {
-        console.log("Initial result:", this.offensiveGameStats);
-        console.log("Id:", input.playerId);
         if (result) {
           if (result.playerId == input.playerId) {
-            console.log("update");
-            console.log("result", result);
             this.subscriptionList.add(
               this.detroitLionsTrackerService.updateOffensiveGameStats(result.gameId, result.playerId, result).subscribe(updateResult => {
-                console.log("After PUT:", updateResult);
                 let updateItem = this.offensiveGameStats.find(game => game.gameId === updateResult.gameId && game.playerId === updateResult.playerId)
                 let index = this.offensiveGameStats.indexOf(updateItem);
                 this.offensiveGameStats[index] = updateResult;
@@ -90,7 +85,6 @@ export class OffensiveGameStatsComponent implements OnInit {
               ));
 
           } else {
-            console.log("add");
             this.subscriptionList.add(
               this.detroitLionsTrackerService.createOffensiveGameStats(result).subscribe(createResult => {
                 this.offensiveGameStats.push(createResult);
