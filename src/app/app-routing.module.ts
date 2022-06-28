@@ -5,6 +5,7 @@ import { SeasonStatsComponent } from './components/season-stats/season-stats.com
 import { OffensiveGameStatsComponent } from './components/offensive-game-stats/offensive-game-stats.component';
 import { DefensiveGameStatsComponent } from './components/defensive-game-stats/defensive-game-stats.component';
 import { SpecialTeamsGameStatsComponent } from './components/special-teams-game-stats/special-teams-game-stats.component';
+import { PlayersComponent } from './components/players/players.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,16 @@ const routes: Routes = [
         path: '',
         outlet: 'Special',
         component: SpecialTeamsGameStatsComponent
+      }
+    ]
+  },
+  {
+    path: 'roster',
+    component: DefaultLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: PlayersComponent
       }
     ]
   },

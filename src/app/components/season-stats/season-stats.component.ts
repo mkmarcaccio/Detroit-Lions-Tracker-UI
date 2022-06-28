@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SeasonGames } from 'src/app/models/season-games';
 import { SeasonStats } from 'src/app/models/season-stats';
