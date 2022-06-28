@@ -13,7 +13,8 @@
             </mat-header-cell>
             <mat-cell fxFlex="15" *matCellDef="let item">
               {{item.gameId}}
-              <a fxFlexFill [routerLink]="'/game-stats/'" [queryParams]="{ GameId: item.gameId}" class="mat-row-link"></a>
+              <a fxFlexFill [routerLink]="'/game-stats/'" [queryParams]="{ GameId: item.gameId}"
+                class="mat-row-link"></a>
             </mat-cell>
           </ng-container>
           <ng-container matColumnDef="opponent">

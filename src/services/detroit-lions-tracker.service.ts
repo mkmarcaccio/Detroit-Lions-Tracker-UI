@@ -6,6 +6,7 @@ import { OffensiveGameStats } from 'src/app/models/offensive-game-stats';
 import { Player } from 'src/app/models/player';
 import { SeasonGames } from 'src/app/models/season-games';
 import { SeasonStats } from 'src/app/models/season-stats';
+import { SpecialTeamsGameStats } from 'src/app/models/special-teams-game-stats';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -127,8 +128,63 @@ export class DetroitLionsTrackerService {
         { headers: this.headers });
   }
 
+  public getSpecialTeamsGameStats(): Observable<SpecialTeamsGameStats[]> {
+    return this.http
+      .get<SpecialTeamsGameStats[]>(`${environment.BaseAddress}SpecialTeamsGameStats`, { headers: this.headers });
+  }
+
+  public getSpecialTeamsGameStatsByGameId(gameId: number): Observable<SpecialTeamsGameStats[]> {
+    return this.http
+      .get<SpecialTeamsGameStats[]>(`${environment.BaseAddress}SpecialTeamsGameStats?GameId=${gameId}`, { headers: this.headers });
+  }
+
+  public updateSpecialTeamsGameStats(gameId: number, playerId: number, specialTeamsGameStats: SpecialTeamsGameStats): Observable<SpecialTeamsGameStats> {
+    return this.http
+      .put<SpecialTeamsGameStats>(`${environment.BaseAddress}SpecialTeamsGameStats/${gameId}/${playerId}`,
+        JSON.stringify(specialTeamsGameStats),
+        { headers: this.headers });
+  }
+
+  public createSpecialTeamsGameStats(specialTeamsGameStats: SpecialTeamsGameStats): Observable<SpecialTeamsGameStats> {
+    return this.http
+      .post<SpecialTeamsGameStats>(`${environment.BaseAddress}SpecialTeamsGameStats`,
+        JSON.stringify(specialTeamsGameStats),
+        { headers: this.headers });
+  }
+
+  public deleteSpecialTeamsGameStats(gameId: number, playerId: number): Observable<SpecialTeamsGameStats> {
+    return this.http
+      .delete<SpecialTeamsGameStats>(`${environment.BaseAddress}SpecialTeamsGameStats/${gameId}/${playerId}`,
+        { headers: this.headers });
+  }
+
   public getPlayers(): Observable<Player[]> {
     return this.http
       .get<Player[]>(`${environment.BaseAddress}Players`, { headers: this.headers });
+  }
+
+  public getPlayersByPlayerId(playerId: number): Observable<Player[]> {
+    return this.http
+      .get<Player[]>(`${environment.BaseAddress}Players?PlayerId=${playerId}`, { headers: this.headers });
+  }
+
+  public updatePlayer(playerId: number, player: Player): Observable<Player> {
+    return this.http
+      .put<Player>(`${environment.BaseAddress}Player/${playerId}`,
+        JSON.stringify(player),
+        { headers: this.headers });
+  }
+
+  public createPlayer(player: Player): Observable<Player> {
+    return this.http
+      .post<Player>(`${environment.BaseAddress}Player`,
+        JSON.stringify(player),
+        { headers: this.headers });
+  }
+
+  public deletePlayer(playerId: number): Observable<Player> {
+    return this.http
+      .delete<Player>(`${environment.BaseAddress}Player/${playerId}`,
+        { headers: this.headers });
   }
 }

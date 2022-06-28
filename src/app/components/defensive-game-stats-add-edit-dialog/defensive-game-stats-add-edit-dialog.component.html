@@ -14,7 +14,7 @@
             </mat-select>
         </mat-form-field>
 
-        <h4>Stats</h4>
+        <h4>Tackling Stats</h4>
         <mat-form-field fxFill>
             <input matInput type="text" name="tackles" placeholder="Tackles"
                 [(ngModel)]="defensiveGameStatsReturnObject.tackles" maxlength="10" />
@@ -40,6 +40,7 @@
                 [(ngModel)]="defensiveGameStatsReturnObject.fumblesRecovered" maxlength="10" />
         </mat-form-field>
 
+        <h4>Coverage Stats</h4>
         <mat-form-field fxFill>
             <input matInput type="text" name="interceptions" placeholder="interceptions"
                 [(ngModel)]="defensiveGameStatsReturnObject.interceptions" maxlength="10" />
@@ -55,6 +56,7 @@
                 [(ngModel)]="defensiveGameStatsReturnObject.passesDeflected" maxlength="10" />
         </mat-form-field>
 
+        <h4>Scoring Stats</h4>
         <mat-form-field fxFill>
             <input matInput type="text" name="touchdowns" placeholder="Touchdowns"
                 [(ngModel)]="defensiveGameStatsReturnObject.touchdowns" maxlength="10" />
