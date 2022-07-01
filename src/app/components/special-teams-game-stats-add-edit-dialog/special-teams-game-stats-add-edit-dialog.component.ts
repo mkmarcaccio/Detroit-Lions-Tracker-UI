@@ -106,11 +106,4 @@ export class SpecialTeamsGameStatsAddEditDialogComponent implements OnInit {
       this.specialTeamsGameStatsReturnObject.playerId = event.value;
     }
   }
-
-  displayPlayerName() {
-    if (this.players && this.specialTeamsGameStatsReturnObject) {
-      let onePlayer = this.players.find(player => player.playerId === this.specialTeamsGameStatsReturnObject.playerId);
-      return [onePlayer.firstName, onePlayer.lastName];
-    }
-  }
 }

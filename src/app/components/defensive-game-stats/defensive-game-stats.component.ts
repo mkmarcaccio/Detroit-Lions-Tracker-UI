@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { DefensiveGameStats } from 'src/app/models/defensive-game-stats';
+import { SeasonGames } from 'src/app/models/season-games';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
 import { DefensiveGameStatsAddEditDialogComponent } from '../defensive-game-stats-add-edit-dialog/defensive-game-stats-add-edit-dialog.component';
 
@@ -18,6 +19,8 @@ export class DefensiveGameStatsComponent implements OnInit {
   public dialogRef;
   public defensiveGameStats: DefensiveGameStats[];
   public GameId: number;
+  public game: SeasonGames;
+  public games: SeasonGames[] = [];
 
   displayedColumns: string[] = [
     'player',
@@ -47,11 +50,19 @@ export class DefensiveGameStatsComponent implements OnInit {
         this.GameId = params.GameId;
       })
 
-    this.detroitLionsTrackerService.getDefensiveGameStatsByGameId(this.GameId)
-      .subscribe(response => {
-        this.defensiveGameStats = response;
-        this.dataSourceDefensiveGameStats.data = this.defensiveGameStats;
-      });
+    const defensiveStatsCall = this.detroitLionsTrackerService.getDefensiveGameStatsByGameId(this.GameId);
+    const gameCall = this.detroitLionsTrackerService.getGames();
+    const requestArray = [];
+    requestArray.push(defensiveStatsCall);
+    requestArray.push(gameCall);
+
+    forkJoin(requestArray).subscribe(results => {
+      this.defensiveGameStats = results[0];
+      this.games = results[1];
+
+      this.dataSourceDefensiveGameStats.data = this.defensiveGameStats;
+      this.game = this.games.find(o => o.gameId == this.GameId)
+    });
   }
 
   addEditDefensiveGameStats(input: any = new DefensiveGameStats) {

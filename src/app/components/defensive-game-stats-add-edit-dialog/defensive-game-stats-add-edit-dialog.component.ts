@@ -106,11 +106,4 @@ export class DefensiveGameStatsAddEditDialogComponent implements OnInit {
       this.defensiveGameStatsReturnObject.playerId = event.value;
     }
   }
-
-  displayPlayerName() {
-    if (this.players && this.defensiveGameStatsReturnObject) {
-      let onePlayer = this.players.find(player => player.playerId === this.defensiveGameStatsReturnObject.playerId);
-      return [onePlayer.firstName, onePlayer.lastName];
-    }
-  }
 }

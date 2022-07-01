@@ -2,7 +2,7 @@
     <div fxFlex="100">
         <mat-card>
             <mat-card-header fxLayout.lt-sm="column" fxLayoutAlign="space-between start">
-                <mat-card-title>Special Teams Game Stats</mat-card-title>
+                <mat-card-title>Special Teams Game Stats - vs {{game?.opponent}}</mat-card-title>
             </mat-card-header>
             <mat-card-content fxLayout="row" fxLayoutGap="4px">
                 <mat-table [dataSource]="dataSourceSpecialTeamsGameStats" matSort>
