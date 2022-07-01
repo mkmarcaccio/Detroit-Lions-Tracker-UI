@@ -1,0 +1,96 @@
+<div fxLayout="row" fxLayoutAlign="center none">
+    <div fxFlex="100">
+        <mat-card>
+            <mat-card-header fxLayout.lt-sm="column" fxLayoutAlign="space-between start">
+                <mat-card-title>Previous Lions</mat-card-title>
+            </mat-card-header>
+            <mat-card-content fxLayout="row" fxLayoutGap="4px">
+                <mat-table [dataSource]="dataSourcePlayers" matSort>
+
+                    <ng-container matColumnDef="jerseyNumber">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            JerseyNumber
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let player">
+                            {{player.jerseyNumber}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="firstName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            FirstName
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let player">
+                            {{player.firstName}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="lastName">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            LastName
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let player">
+                            {{player.lastName}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="position">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Position
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let player">
+                            {{player.position}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="unit">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            Unit
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let player">
+                            {{player.unit}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                        <mat-header-cell fxFlex *matHeaderCellDef></mat-header-cell>
+                        <mat-cell fxLayoutAlign="end center" fxLayoutGap="4px" *matCellDef="let item">
+                            <button fxFlex="none" mat-icon-button color="accent" title="edit"
+                                (click)="addEditPlayers(item)" matTooltip="edit player">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button fxFlex="none" mat-button color="primary" title="delete"
+                                (click)="openDeleteDialog(template, item)" matTooltip="delete player">
+                                <mat-icon>delete_forever</mat-icon>
+                                <ng-template #template>
+                                    <h2 matDialogTitle>Delete Player</h2>
+                                    <ng-container>
+                                        <h4>Player</h4>
+                                        <p>{{item.firstName}} {{item.lastName}}</p>
+                                    </ng-container>
+                                    <mat-dialog-actions align="end">
+                                        <button mat-button (click)="deletePlayers(item)" color="primary"> Delete
+                                        </button>
+                                        <button mat-button mat-dialog-close color="warn"> Cancel </button>
+                                    </mat-dialog-actions>
+                                </ng-template>
+                            </button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row fxLayout="row" fxLayoutGap="30px" *matHeaderRowDef="displayedColumns">
+                    </mat-header-row>
+                    <mat-row fxLayout="row" fxLayoutGap="30px" *matRowDef="let row; columns: displayedColumns;">
+                    </mat-row>
+                </mat-table>
+            </mat-card-content>
+
+            <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+                <button fxFlex="none" mat-button color="primary" title="add" (click)="addEditPlayers()"
+                    matTooltip="add player">
+                    Add Player
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

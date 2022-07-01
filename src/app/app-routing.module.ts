@@ -6,6 +6,7 @@ import { OffensiveGameStatsComponent } from './components/offensive-game-stats/o
 import { DefensiveGameStatsComponent } from './components/defensive-game-stats/defensive-game-stats.component';
 import { SpecialTeamsGameStatsComponent } from './components/special-teams-game-stats/special-teams-game-stats.component';
 import { PlayersComponent } from './components/players/players.component';
+import { PreviousPlayersComponent } from './components/previous-players/previous-players.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,16 @@ const routes: Routes = [
       {
         path: '',
         component: PlayersComponent
+      }
+    ]
+  },
+  {
+    path: 'previous-players',
+    component: DefaultLayoutComponent,
+    children: [
+      {
+        path: '',
+        component: PreviousPlayersComponent
       }
     ]
   },
