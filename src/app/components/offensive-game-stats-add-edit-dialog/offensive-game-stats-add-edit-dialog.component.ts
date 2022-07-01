@@ -26,8 +26,6 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
   public onePlayer: Player;
   public player: number;
 
-  public response = [];
-
   constructor(
     public dialogRef: MatDialogRef<OffensiveGameStatsComponent>,
     private detroitLionsTrackerService: DetroitLionsTrackerService,
