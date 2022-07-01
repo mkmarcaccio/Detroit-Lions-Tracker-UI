@@ -65,8 +65,8 @@
                                 <ng-template #template>
                                     <h2 matDialogTitle>Delete Player</h2>
                                     <ng-container>
-                                        <h4> Player Id </h4>
-                                        <p> {{item.playerId}} </p>
+                                        <h4>Player</h4>
+                                        <p>{{item.firstName}} {{item.lastName}}</p>
                                     </ng-container>
                                     <mat-dialog-actions align="end">
                                         <button mat-button (click)="deletePlayers(item)" color="primary"> Delete
