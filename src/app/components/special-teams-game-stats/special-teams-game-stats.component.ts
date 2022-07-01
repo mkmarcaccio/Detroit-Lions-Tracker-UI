@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
+import { SeasonGames } from 'src/app/models/season-games';
 import { SpecialTeamsGameStats } from 'src/app/models/special-teams-game-stats';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
 import { SpecialTeamsGameStatsAddEditDialogComponent } from '../special-teams-game-stats-add-edit-dialog/special-teams-game-stats-add-edit-dialog.component';
@@ -18,6 +19,8 @@ export class SpecialTeamsGameStatsComponent implements OnInit {
   public dialogRef;
   public specialTeamsGameStats: SpecialTeamsGameStats[];
   public GameId: number;
+  public game: SeasonGames;
+  public games: SeasonGames[] = [];
 
   displayedColumns: string[] = [
     'player',
@@ -48,11 +51,19 @@ export class SpecialTeamsGameStatsComponent implements OnInit {
         this.GameId = params.GameId;
       })
 
-    this.detroitLionsTrackerService.getSpecialTeamsGameStatsByGameId(this.GameId)
-      .subscribe(response => {
-        this.specialTeamsGameStats = response;
-        this.dataSourceSpecialTeamsGameStats.data = this.specialTeamsGameStats;
-      });
+    const specialTeamsStatsCall = this.detroitLionsTrackerService.getSpecialTeamsGameStatsByGameId(this.GameId);
+    const gameCall = this.detroitLionsTrackerService.getGames();
+    const requestArray = [];
+    requestArray.push(specialTeamsStatsCall);
+    requestArray.push(gameCall);
+
+    forkJoin(requestArray).subscribe(results => {
+      this.specialTeamsGameStats = results[0];
+      this.games = results[1];
+
+      this.dataSourceSpecialTeamsGameStats.data = this.specialTeamsGameStats;
+      this.game = this.games.find(o => o.gameId == this.GameId)
+    });
   }
 
   addEditSpecialTeamsGameStats(input: any = new SpecialTeamsGameStats) {
