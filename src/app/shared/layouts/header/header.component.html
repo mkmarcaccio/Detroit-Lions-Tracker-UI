@@ -5,7 +5,7 @@
         <mat-icon>menu</mat-icon>
       </button>
     </div>
-    <a fxFlexFill [routerLink]="'/season-stats/'" class="active"><span>Detroit Lions Stat Tracker</span></a>
+    <a fxFlexFill class="active" [routerLink]="'/season-stats/'" [queryParams]="{ SeasonId: this.SeasonId}"><span>Detroit Lions Stat Tracker</span></a>
 
     <div fxFlex="1 1 auto"></div>
     <div fxLayout fxLayoutGap="1em" fxHide.lt-md>
