@@ -128,12 +128,12 @@
                                 <ng-template #template>
                                     <h2 matDialogTitle>Delete Special Teams Game Stats</h2>
                                     <ng-container>
-                                        <h4> Game Id</h4>
+                                        <h4>Game Id</h4>
                                         <p> {{item.gameId}} </p>
                                     </ng-container>
                                     <ng-container>
-                                        <h4> Player Id </h4>
-                                        <p> {{item.playerId}} </p>
+                                        <h4>Player</h4>
+                                        <p> {{item.player?.firstName}} {{item.player?.lastName}} </p>
                                     </ng-container>
                                     <mat-dialog-actions align="end">
                                         <button mat-button (click)="deleteSpecialTeamsGameStats(item)" color="primary">
