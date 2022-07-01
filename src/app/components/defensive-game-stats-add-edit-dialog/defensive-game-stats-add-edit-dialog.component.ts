@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MatSelectChange, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { DefensiveGameStats } from 'src/app/models/defensive-game-stats';
 import { Player } from 'src/app/models/player';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
@@ -64,18 +64,23 @@ export class DefensiveGameStatsAddEditDialogComponent implements OnInit {
         this.GameId = params.GameId;
       })
 
-    this.detroitLionsTrackerService.getDefensiveGameStatsByGameId(this.GameId)
-      .subscribe(response => {
-        this.defensiveGameStats = response;
-        this.defensiveGameStatsReturnObject.gameId = this.GameId;
-        this.dataSourceDefensiveGameStats.data = response;
-      });
+    const defensiveStatsCall = this.detroitLionsTrackerService.getDefensiveGameStatsByGameId(this.GameId);
+    const playersCall = this.detroitLionsTrackerService.getPlayers();
+    const requestArray = [];
+    requestArray.push(defensiveStatsCall);
+    requestArray.push(playersCall);
 
-    this.detroitLionsTrackerService.getPlayers()
-      .subscribe(response => {
-        this.players = response
-        this.onePlayer = this.players.find(player => player.playerId === this.defensiveGameStatsReturnObject.playerId);
-      });
+    forkJoin(requestArray).subscribe(results => {
+      this.defensiveGameStats = results[0];
+      this.players = results[1];
+
+      this.defensiveGameStatsReturnObject.gameId = this.GameId;
+      this.dataSourceDefensiveGameStats.data = this.defensiveGameStats;
+
+      this.players = this.players.filter(player => player.isOnRoster == true && player.unit == "Defense");
+      this.onePlayer = this.players.find(player => player.playerId === this.defensiveGameStatsReturnObject.playerId);
+      this.players = this.players.filter(player => !this.dataSourceDefensiveGameStats.data.some(d => d.playerId === player.playerId));
+    });
   }
 
   enableSaveButton() {

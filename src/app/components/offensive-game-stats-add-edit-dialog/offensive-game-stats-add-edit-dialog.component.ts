@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MatSelectChange, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { OffensiveGameStats } from 'src/app/models/offensive-game-stats';
 import { Player } from 'src/app/models/player';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
@@ -25,6 +25,8 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
   public players: Player[] = [];
   public onePlayer: Player;
   public player: number;
+
+  public response = [];
 
   constructor(
     public dialogRef: MatDialogRef<OffensiveGameStatsComponent>,
@@ -68,18 +70,23 @@ export class OffensiveGameStatsAddEditDialogComponent implements OnInit {
         this.GameId = params.GameId;
       })
 
-    this.detroitLionsTrackerService.getOffensiveGameStatsByGameId(this.GameId)
-      .subscribe(response => {
-        this.offensiveGameStats = response;
-        this.offensiveGameStatsReturnObject.gameId = this.GameId;
-        this.dataSourceOffensiveGameStats.data = response;
-      });
+    const offensiveStatsCall = this.detroitLionsTrackerService.getOffensiveGameStatsByGameId(this.GameId);
+    const playersCall = this.detroitLionsTrackerService.getPlayers();
+    const requestArray = [];
+    requestArray.push(offensiveStatsCall);
+    requestArray.push(playersCall);
 
-    this.detroitLionsTrackerService.getPlayers()
-      .subscribe(response => {
-        this.players = response
-        this.onePlayer = this.players.find(player => player.playerId === this.offensiveGameStatsReturnObject.playerId);
-      });
+    forkJoin(requestArray).subscribe(results => {
+      this.offensiveGameStats = results[0];
+      this.players = results[1];
+
+      this.offensiveGameStatsReturnObject.gameId = this.GameId;
+      this.dataSourceOffensiveGameStats.data = this.offensiveGameStats;
+
+      this.players = this.players.filter(player => player.isOnRoster == true && player.unit == "Offense");
+      this.onePlayer = this.players.find(player => player.playerId === this.offensiveGameStatsReturnObject.playerId);
+      this.players = this.players.filter(player => !this.dataSourceOffensiveGameStats.data.some(d => d.playerId === player.playerId));
+    });
   }
 
   enableSaveButton() {

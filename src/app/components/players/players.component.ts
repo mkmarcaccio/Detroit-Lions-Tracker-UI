@@ -24,7 +24,6 @@ export class PlayersComponent implements OnInit {
     'lastName',
     'position',
     'unit',
-    'depthChartOrder',
     'actions'
   ];
 
@@ -38,8 +37,8 @@ export class PlayersComponent implements OnInit {
     this.detroitLionsTrackerService.getPlayers()
       .subscribe(response => {
         this.players = response;
-        this.dataSourcePlayers.data = response;
-        console.log("initial:", this.players);
+        this.players = this.players.filter(player => player.isOnRoster == true)
+        this.dataSourcePlayers.data = this.players;
       });
   }
 
@@ -115,7 +114,8 @@ export class PlayersComponent implements OnInit {
     this.detroitLionsTrackerService.getPlayers()
       .subscribe(response => {
         this.players = response;
-        this.dataSourcePlayers.data = response;
+        this.players = this.players.filter(player => player.isOnRoster == true)
+        this.dataSourcePlayers.data = this.players;
       });
   }
 }

@@ -78,8 +78,8 @@ export class PlayersAddEditDialogComponent implements OnInit {
     this.detroitLionsTrackerService.getPlayers()
       .subscribe(response => {
         this.players = response;
-        this.dataSourcePlayers.data = response;
-        console.log("Initial dialog",this.playersReturnObject);
+        this.players = this.players.filter(player => player.isOnRoster == true)
+        this.dataSourcePlayers.data = this.players;
       });
   }
 
