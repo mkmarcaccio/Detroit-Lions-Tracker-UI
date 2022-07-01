@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MatSelectChange, MatTableDataSource, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { Player } from 'src/app/models/player';
 import { SpecialTeamsGameStats } from 'src/app/models/special-teams-game-stats';
 import { DetroitLionsTrackerService } from 'src/services/detroit-lions-tracker.service';
@@ -30,7 +30,7 @@ export class SpecialTeamsGameStatsAddEditDialogComponent implements OnInit {
     private detroitLionsTrackerService: DetroitLionsTrackerService,
     private route: ActivatedRoute,
     @Inject(MAT_DIALOG_DATA) public data: any,
-  ) { 
+  ) {
     if (!data.playerId) {
       this.isAdd = true;
     }
@@ -43,10 +43,10 @@ export class SpecialTeamsGameStatsAddEditDialogComponent implements OnInit {
     } else {
       this.specialTeamsGameStatsReturnObject.gameId = data.gameId;
       this.specialTeamsGameStatsReturnObject.playerId = data.player.playerId;
-      this.specialTeamsGameStatsReturnObject.fgAttempts = data.fGAttempts;
-      this.specialTeamsGameStatsReturnObject.fgMade = data.fGMade;
-      this.specialTeamsGameStatsReturnObject.xpAttempts = data.xPAttempts;
-      this.specialTeamsGameStatsReturnObject.xpMade = data.xPMade;
+      this.specialTeamsGameStatsReturnObject.fgAttempts = data.fgAttempts;
+      this.specialTeamsGameStatsReturnObject.fgMade = data.fgMade;
+      this.specialTeamsGameStatsReturnObject.xpAttempts = data.xpAttempts;
+      this.specialTeamsGameStatsReturnObject.xpMade = data.xpMade;
       this.specialTeamsGameStatsReturnObject.punts = data.punts;
       this.specialTeamsGameStatsReturnObject.puntYards = data.puntYards;
       this.specialTeamsGameStatsReturnObject.kickReturns = data.kickReturns;
@@ -64,18 +64,23 @@ export class SpecialTeamsGameStatsAddEditDialogComponent implements OnInit {
         this.GameId = params.GameId;
       })
 
-    this.detroitLionsTrackerService.getSpecialTeamsGameStatsByGameId(this.GameId)
-      .subscribe(response => {
-        this.specialTeamsGameStats = response;
-        this.specialTeamsGameStatsReturnObject.gameId = this.GameId;
-        this.dataSourceSpecialTeamsGameStats.data = response;
-      });
+    const specialTeamsStatsCall = this.detroitLionsTrackerService.getSpecialTeamsGameStatsByGameId(this.GameId);
+    const playersCall = this.detroitLionsTrackerService.getPlayers();
+    const requestArray = [];
+    requestArray.push(specialTeamsStatsCall);
+    requestArray.push(playersCall);
 
-    this.detroitLionsTrackerService.getPlayers()
-      .subscribe(response => {
-        this.players = response
-        this.onePlayer = this.players.find(player => player.playerId === this.specialTeamsGameStatsReturnObject.playerId);
-      });
+    forkJoin(requestArray).subscribe(results => {
+      this.specialTeamsGameStats = results[0];
+      this.players = results[1];
+
+      this.specialTeamsGameStatsReturnObject.gameId = this.GameId;
+      this.dataSourceSpecialTeamsGameStats.data = this.specialTeamsGameStats;
+
+      this.players = this.players.filter(player => player.isOnRoster == true);
+      this.onePlayer = this.players.find(player => player.playerId === this.specialTeamsGameStatsReturnObject.playerId);
+      this.players = this.players.filter(player => !this.dataSourceSpecialTeamsGameStats.data.some(d => d.playerId === player.playerId));
+    });
   }
 
   enableSaveButton() {

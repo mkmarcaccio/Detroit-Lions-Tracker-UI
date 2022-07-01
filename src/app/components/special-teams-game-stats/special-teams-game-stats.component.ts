@@ -51,7 +51,7 @@ export class SpecialTeamsGameStatsComponent implements OnInit {
     this.detroitLionsTrackerService.getSpecialTeamsGameStatsByGameId(this.GameId)
       .subscribe(response => {
         this.specialTeamsGameStats = response;
-        this.dataSourceSpecialTeamsGameStats.data = response;
+        this.dataSourceSpecialTeamsGameStats.data = this.specialTeamsGameStats;
       });
   }
 
@@ -128,7 +128,7 @@ export class SpecialTeamsGameStatsComponent implements OnInit {
     this.detroitLionsTrackerService.getSpecialTeamsGameStatsByGameId(this.GameId)
       .subscribe(response => {
         this.specialTeamsGameStats = response;
-        this.dataSourceSpecialTeamsGameStats.data = response;
+        this.dataSourceSpecialTeamsGameStats.data = this.specialTeamsGameStats;
       });
   }
 }
