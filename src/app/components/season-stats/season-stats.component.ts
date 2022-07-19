@@ -55,8 +55,10 @@ export class SeasonStatsComponent implements OnInit {
       this.seasonStats = results[0];
       this.seasonGames = results[1];
 
-      this.seasonStats = this.seasonStats.filter(season => season.seasonId == this.SeasonId);
-      this.oneSeason = this.seasonStats.find(s => s.seasonId == this.SeasonId);
+      this.oneSeason = this.seasonStats[0];
+      // this.oneSeason = this.seasonStats.find(s => s.seasonId == this.SeasonId);
+      this.SeasonId = this.oneSeason.seasonId;
+      this.seasonStats = this.seasonStats.filter(season => season.seasonId == this.SeasonId);      
       this.seasonGames = this.seasonGames.filter(games => games.seasonId == this.SeasonId);
       this.dataSourceSeasonGames.data = this.seasonGames;
     });
