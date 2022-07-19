@@ -2,6 +2,81 @@ table {
   width: 100%;
 }
 
+.mat-column-player {
+  word-wrap: break-word !important;
+  flex: 0 0 7% !important;
+}
+
+.mat-column-passingAttempts {
+  word-wrap: break-word !important;
+  flex: 0 0 7% !important;
+}
+
+.mat-column-passingCompletions {
+  word-wrap: break-word !important;
+  flex: 0 0 8% !important;
+}
+
+.mat-column-passingYards {
+  word-wrap: break-word !important;
+  flex: 0 0 6% !important;
+}
+
+.mat-column-passingTouchdowns {
+  word-wrap: break-word !important;
+  flex: 0 0 8% !important;
+}
+
+.mat-column-interceptions {
+  word-wrap: break-word !important;
+  flex: 0 0 5% !important;
+}
+
+.mat-column-rushingAttempts {
+  word-wrap: break-word !important;
+  flex: 0 0 7% !important;
+}
+
+.mat-column-rushingYards {
+  word-wrap: break-word !important;
+  flex: 0 0 6% !important;
+}
+
+.mat-column-rushingTouchdowns {
+  word-wrap: break-word !important;
+  flex: 0 0 8% !important;
+}
+
+.mat-column-fumbles {
+  word-wrap: break-word !important;
+  flex: 0 0 4% !important;
+}
+
+.mat-column-receptions {
+  word-wrap: break-word !important;
+  flex: 0 0 5% !important;
+}
+
+.mat-column-receivingYards {
+  word-wrap: break-word !important;
+  flex: 0 0 6% !important;
+}
+
+.mat-column-receivingTouchdowns {
+  word-wrap: break-word !important;
+  flex: 0 0 9% !important;
+}
+
+.mat-column-targets {
+  word-wrap: break-word !important;
+  flex: 0 0 4% !important;
+}
+
+.mat-column-drops {
+  word-wrap: break-word !important;
+  flex: 0 0 2% !important;
+}
+
 mat-card {
   margin: 5px;
   padding: 5px;
