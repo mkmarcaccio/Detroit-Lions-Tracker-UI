@@ -1,3 +1,31 @@
+# What Have I Learned?
+1. End to End Development
+    1. ERD Diagram
+    2. API
+    3. MySQL Database (EntityFramework)
+    4. Angular UI
+    
+2. Routing between components
+    1. Query Parameters
+    2. RouterLink
+    3. App-routing Module
+    
+3. Angular Life Cycle Hooks
+    1. Fork Joins
+    2. ngOnInit
+    3. Service Calls
+    
+4. Angular UI Design
+    1. Material
+    2. Layouts
+    3. SCSS
+  
+5. EntityFramework
+    1. Migrations
+    2. DB Context
+
+
+
 # DetroitLionsTrackerUi
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
