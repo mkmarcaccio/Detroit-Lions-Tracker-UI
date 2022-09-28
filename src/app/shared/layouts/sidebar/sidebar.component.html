@@ -1,5 +1,18 @@
-<a fxFlexFill [routerLink]="'/roster/'"><div>Current Roster</div></a>
+<mat-form-field fxFill>
+    <mat-label>Select Season</mat-label>
+    <mat-select name="seasons" [(ngModel)]="oneSeason">
+      <mat-option *ngFor="let season of seasonStats" [value]="season.year" [routerLink]="'/season-stats/'" [queryParams]="{ SeasonId: season.seasonId}">
+        {{season.year}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-<p>Seasons</p>
-
-<a fxFlexFill [routerLink]="'/previous-players/'"><div>Previous Lions</div></a>
+<div class="space">
+    <a fxFlexFill [routerLink]="'/roster/'">
+        <div>Current Roster</div>
+    </a>
+</div>
+<div class="space">
+    <a fxFlexFill [routerLink]="'/previous-players/'">
+        <div>Previous/Non-Active Lions</div>
+    </a>
+</div>
