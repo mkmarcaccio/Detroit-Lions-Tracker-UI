@@ -21,11 +21,17 @@ export enum PlayerPositions {
     FB = "FB",
     TE = "TE",
     WR = "WR",
+    LT = "LT",
+    LG = "LG",
+    C = "C",
+    RG = "RG",
+    RT = "RT",
     DT = "DT",
     DE = "DE",
     LB = "LB",
     CB = "CB",
     S = "S",
     K = "K",
-    P = "P"
+    P = "P",
+    LS = "LS"
 }

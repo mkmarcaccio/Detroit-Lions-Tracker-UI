@@ -34,13 +34,19 @@ export class PreviousPlayersAddEditDialogComponent implements OnInit {
     PlayerPositions.FB,
     PlayerPositions.TE,
     PlayerPositions.WR,
+    PlayerPositions.LT,
+    PlayerPositions.LG,
+    PlayerPositions.C,
+    PlayerPositions.RG,
+    PlayerPositions.RT,
     PlayerPositions.DT,
     PlayerPositions.DE,
     PlayerPositions.LB,
     PlayerPositions.CB,
     PlayerPositions.S,
     PlayerPositions.K,
-    PlayerPositions.P
+    PlayerPositions.P,
+    PlayerPositions.LS
   ];
 
   constructor(
