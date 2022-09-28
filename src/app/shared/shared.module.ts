@@ -29,6 +29,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDialogModule } from '@angular/material';
+import { MatSelectModule } from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -63,7 +65,8 @@ import { MatDialogModule } from '@angular/material';
     MatCheckboxModule,
     MatTooltipModule,
     MatButtonToggleModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSelectModule
   ],
   exports: [
     HeaderComponent,
